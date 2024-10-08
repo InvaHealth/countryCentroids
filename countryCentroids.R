@@ -1,3 +1,5 @@
+## find the latitude/longitude coordinates (decimal degrees) for any country in the world
+
 library(rworldmap)
 library(terra)
 
