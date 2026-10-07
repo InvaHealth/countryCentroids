@@ -38,3 +38,18 @@ if (sys.nframe() == 0) {
   )
   print(australia_city_centroids)
 }
+
+## find ADM regions using geobounds
+install.packages("geobounds")
+library(geobounds)
+sri_lanka_adm3 <- gb_get_adm3("Sri Lanka")
+print(sri_lanka_adm3)
+
+aus_adm2 <- gb_get_adm2("Australia")
+print(aus_adm2)
+
+fra_adm1 <- gb_get_adm1("France")
+print(fra_adm1)
+
+fra_adm2 <- gb_get_adm2("France")
+print(fra_adm2)

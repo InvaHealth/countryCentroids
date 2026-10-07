@@ -59,8 +59,7 @@ and records geoBoundaries source metadata with every centroid.
 Rscript gazetted_centroids.R
 ```
 
-The included example returns the ADM1 centroids for New South Wales and Victoria.
-Reuse the helper for another country and administrative level:
+Examples:
 
 ```r
 source("gazetted_centroids.R")
@@ -81,6 +80,25 @@ australia_city_centroids <- calculate_geoboundaries_centroids(
 print(australia_city_centroids)
 
 ```
+
+Note: ADM1—5 levels can be queried using <code>geobounds</code>
+
+```r
+install.packages("geobounds")
+library(geobounds)
+sri_lanka_adm3 <- gb_get_adm3("Sri Lanka")
+print(sri_lanka_adm3)
+
+aus_adm2 <- gb_get_adm2("Australia")
+print(aus_adm2)
+
+fra_adm1 <- gb_get_adm1("France")
+print(fra_adm1)
+
+fra_adm2 <- gb_get_adm2("France")
+print(fra_adm2)
+```
+
 
 `get_geoboundaries_regions()` supports `gbOpen`, `gbHumanitarian`, and
 `gbAuthoritative` collections. Inspect the returned metadata and verify the supplied
