@@ -19,11 +19,22 @@ calculate_geoboundaries_centroids <- function(country_iso, admin_level, location
   )
 }
 
+## examples
 if (sys.nframe() == 0) {
   australia_state_centroids <- calculate_geoboundaries_centroids(
     country_iso = "AUS",
     admin_level = "ADM1",
-    location_names = c("New South Wales", "Victoria")
+    location_names = c("New South Wales", "Victoria","South Australia","Western Australia",
+                       "Queensland","Northern Territory","Tasmania")
   )
   print(australia_state_centroids)
+}
+
+if (sys.nframe() == 0) {
+  australia_city_centroids <- calculate_geoboundaries_centroids(
+    country_iso = "AUS",
+    admin_level = "ADM2",
+    location_names = c("Sydney","Melbourne","Brisbane","Adelaide","Perth","Darwin")
+  )
+  print(australia_city_centroids)
 }

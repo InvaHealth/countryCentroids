@@ -65,11 +65,21 @@ Reuse the helper for another country and administrative level:
 ```r
 source("gazetted_centroids.R")
 
-state_centroids <- calculate_geoboundaries_centroids(
-  country_iso = "USA",
-  admin_level = "ADM1",
-  location_names = c("California", "New York")
+australia_state_centroids <- calculate_geoboundaries_centroids(
+    country_iso = "AUS",
+    admin_level = "ADM1",
+    location_names = c("New South Wales", "Victoria","South Australia","Western Australia",
+                       "Queensland","Northern Territory","Tasmania")
 )
+print(australia_state_centroids)
+
+australia_city_centroids <- calculate_geoboundaries_centroids(
+    country_iso = "AUS",
+    admin_level = "ADM2",
+    location_names = c("Sydney","Melbourne","Brisbane","Adelaide","Perth","Darwin")
+  )
+print(australia_city_centroids)
+
 ```
 
 `get_geoboundaries_regions()` supports `gbOpen`, `gbHumanitarian`, and
