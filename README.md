@@ -1,6 +1,6 @@
 # Centroids
 
-Find latitude/longitude centroid coordinates for countries, polygonal regions, or groups of points using `countryCentroids.R`.
+Find latitude/longitude centroid coordinates for countries, polygonal regions, gazetted administrative levels, or groups of points using `countryCentroids.R`.
 
 ## countries
 
