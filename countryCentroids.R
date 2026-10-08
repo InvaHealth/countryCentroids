@@ -31,6 +31,41 @@ calculate_polygon_centroids <- function(regions) {
   )
 }
 
+calculate_country_centroids <- function(country_iso3) {
+  if (
+    !is.character(country_iso3) ||
+    length(country_iso3) == 0 ||
+    any(is.na(country_iso3)) ||
+    any(!grepl("^[A-Za-z]{3}$", country_iso3))
+  ) {
+    stop(
+      "'country_iso3' must contain one or more three-letter ISO 3166-1 alpha-3 codes.",
+      call. = FALSE
+    )
+  }
+
+  country_iso3 <- toupper(country_iso3)
+  world_map <- vect(getMap(resolution = "high"))
+  country_indices <- match(country_iso3, world_map$ne_10m_adm)
+  if (any(is.na(country_indices))) {
+    stop(
+      sprintf(
+        "No country boundary is available for: %s.",
+        paste(shQuote(country_iso3[is.na(country_indices)]), collapse = ", ")
+      ),
+      call. = FALSE
+    )
+  }
+
+  country_centroids <- calculate_polygon_centroids(world_map[country_indices, ])
+  data.frame(
+    'cntry.code' = as.character(country_centroids$ne_10m_adm),
+    'country.name' = as.character(country_centroids$ADMIN),
+    'lat' = country_centroids$lat,
+    'lon' = country_centroids$lon
+  )
+}
+
 get_geoboundaries_regions <- function(country_iso, admin_level, collection = "gbOpen") {
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop(
@@ -164,5 +199,3 @@ if (sys.nframe() == 0) {
   )
   head(centroids.out)
 }
-
-
