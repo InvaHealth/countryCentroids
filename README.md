@@ -12,6 +12,17 @@ Rscript countryCentroids.R
 
 Prints first rows of `centroids.out`, which contains the Natural Earth country code, country name, and centroid latitude/longitude in decimal degrees.
 
+To calculate centroids for selected ISO 3166-1 alpha-3 codes, source the script and
+call `calculate_country_centroids()`. The result preserves the requested code order
+and returns `cntry.code`, `country.name`, `lat`, and `lon`.
+
+```r
+source("countryCentroids.R")
+
+country_centroids <- calculate_country_centroids(c("AUS", "NZL", "FJI"))
+print(country_centroids)
+```
+
 ## sub-country regions
 
 Source the script, load polygonal regions into a `terra` `SpatVector`, and call `calculate_polygon_centroids()`. Returned data frame preserve region attributes and add `lat` and `lon`.
