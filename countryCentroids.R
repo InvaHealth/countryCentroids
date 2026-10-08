@@ -188,6 +188,39 @@ calculate_point_centroid <- function(points) {
   )
 }
 
+calculate_coordinate_centroid <- function(coordinates) {
+  coordinates <- as.data.frame(coordinates)
+  if (ncol(coordinates) != 2 || nrow(coordinates) < 3) {
+    stop(
+      "'coordinates' must contain at least three latitude/longitude pairs.",
+      call. = FALSE
+    )
+  }
+
+  latitude <- suppressWarnings(as.numeric(coordinates[[1]]))
+  longitude <- suppressWarnings(as.numeric(coordinates[[2]]))
+  if (
+    anyNA(latitude) ||
+    anyNA(longitude) ||
+    any(!is.finite(latitude)) ||
+    any(!is.finite(longitude)) ||
+    any(latitude < -90 | latitude > 90) ||
+    any(longitude < -180 | longitude > 180)
+  ) {
+    stop(
+      "'coordinates' must contain finite latitude values from -90 to 90 and longitude values from -180 to 180.",
+      call. = FALSE
+    )
+  }
+
+  points <- vect(
+    data.frame(lon = longitude, lat = latitude),
+    geom = c("lon", "lat"),
+    crs = "EPSG:4326"
+  )
+  calculate_point_centroid(points)
+}
+
 if (sys.nframe() == 0) {
   wmap <- vect(getMap(resolution = "high"))
   country_centroids <- calculate_polygon_centroids(wmap)

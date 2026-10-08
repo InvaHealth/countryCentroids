@@ -53,3 +53,25 @@ print(fra_adm1)
 
 fra_adm2 <- gb_get_adm2("France")
 print(fra_adm2)
+
+gb_get_adm2("Brazil")
+
+
+
+## working
+calculate_country_centroids("REU")
+
+Sys.setenv(OGR_GEOJSON_MAX_OBJ_SIZE = "10000")
+library(sf)
+
+centr_out <- calculate_geoboundaries_centroids(
+  country_iso = "BFA",
+  admin_level = "ADM3"
+)
+print(centr_out$shapeName)
+centr_out[which(centr_out$shapeName == "Ouagadougou"),]
+
+# 57°43'S
+-(57 + (43/60))
+# 5°17'W
+-(5+(17/60))
