@@ -159,3 +159,17 @@ points <- vect(
 )
 point_centroid <- calculate_point_centroid(points)
 ```
+
+For three or more hard-coded decimal-degree coordinate pairs, use
+`calculate_coordinate_centroid()`. Supply pairs in latitude, longitude order; it
+validates the coordinate ranges and uses the same spherical mean.
+
+```r
+source("countryCentroids.R")
+
+point_centroid <- calculate_coordinate_centroid(rbind(
+  c(-33.87, 151.21),
+  c(-37.81, 144.96),
+  c(-27.47, 153.03)
+))
+```
