@@ -66,6 +66,61 @@ calculate_country_centroids <- function(country_iso3) {
   )
 }
 
+calculate_continent_centroids <- function(continents = NULL) {
+  if (
+    !is.null(continents) &&
+    (
+      !is.character(continents) ||
+      length(continents) == 0 ||
+      any(is.na(continents)) ||
+      any(!nzchar(continents))
+    )
+  ) {
+    stop(
+      "'continents' must be NULL or contain one or more non-empty continent names.",
+      call. = FALSE
+    )
+  }
+
+  world_map <- vect(getMap(resolution = "high"))
+  available_continents <- unique(stats::na.omit(as.character(world_map$continent)))
+  if (is.null(continents)) {
+    continents <- available_continents
+  }
+
+  continent_indices <- match(tolower(continents), tolower(available_continents))
+  if (any(is.na(continent_indices))) {
+    stop(
+      sprintf(
+        "No continent boundary is available for: %s.",
+        paste(shQuote(continents[is.na(continent_indices)]), collapse = ", ")
+      ),
+      call. = FALSE
+    )
+  }
+
+  continents <- available_continents[continent_indices]
+  continent_regions <- world_map[
+    !is.na(world_map$continent) & world_map$continent %in% continents,
+    "continent"
+  ]
+  continent_boundaries <- aggregate(
+    makeValid(continent_regions),
+    by = "continent",
+    dissolve = TRUE
+  )
+  continent_centroids <- calculate_polygon_centroids(continent_boundaries)
+  continent_centroids <- continent_centroids[
+    match(continents, as.character(continent_centroids$continent)),
+    ]
+
+  data.frame(
+    continent = as.character(continent_centroids$continent),
+    lat = continent_centroids$lat,
+    lon = continent_centroids$lon
+  )
+}
+
 get_geoboundaries_regions <- function(country_iso, admin_level, collection = "gbOpen") {
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop(
