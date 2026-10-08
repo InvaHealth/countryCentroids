@@ -61,15 +61,23 @@ gb_get_adm2("Brazil")
 ## working
 calculate_country_centroids("REU")
 
+points <- vect(
+  data.frame(lon = c(-2.610702, -4.298582782), lat = c(11.28484, 11.17086128)),
+  geom = c("lon", "lat"),
+  crs = "EPSG:4326"
+)
+point_centroid <- calculate_point_centroid(points)
+point_centroid
+
 Sys.setenv(OGR_GEOJSON_MAX_OBJ_SIZE = "10000")
 library(sf)
 
 centr_out <- calculate_geoboundaries_centroids(
-  country_iso = "BFA",
-  admin_level = "ADM3"
+  country_iso = "COL",
+  admin_level = "ADM2"
 )
 print(centr_out$shapeName)
-centr_out[which(centr_out$shapeName == "Ouagadougou"),]
+centr_out[which(centr_out$shapeName == "Tapon del Darién"),]
 
 # 57°43'S
 -(57 + (43/60))

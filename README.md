@@ -23,6 +23,21 @@ country_centroids <- calculate_country_centroids(c("AUS", "NZL", "FJI"))
 print(country_centroids)
 ```
 
+## continents
+
+Call `calculate_continent_centroids()` to calculate centroids for all continents
+available in the Natural Earth map. The map groups Europe and Asia as `Eurasia`; the
+other available names are `Africa`, `Antarctica`, `Australia`, `North America`, and
+`South America and the Caribbean`. Continent polygons are repaired and dissolved
+before calculating each centroid.
+
+```r
+source("countryCentroids.R")
+
+all_continent_centroids <- calculate_continent_centroids()
+australia_and_africa <- calculate_continent_centroids(c("Australia", "Africa"))
+```
+
 ## sub-country regions
 
 Source the script, load polygonal regions into a `terra` `SpatVector`, and call `calculate_polygon_centroids()`. Returned data frame preserve region attributes and add `lat` and `lon`.
